@@ -1,6 +1,8 @@
 using UnityEngine;
 using Zenject;
 using Cysharp.Threading.Tasks;
+using System;
+using System.Collections.Generic;
 
 namespace VirtualTomatoHouse.Scripts.Usecase
 {
@@ -8,9 +10,9 @@ namespace VirtualTomatoHouse.Scripts.Usecase
     {
         [Inject] readonly ISaveTextureRepository _saveTextureRepository;
 
-        public async UniTask SaveTexture(int width, int height, Camera camera, TextureFormat format, string filePath)
+        public void SaveTexture(IEnumerable<AnnotationPair> pairs)
         {
-            await _saveTextureRepository.Save(width, height, camera, format, filePath);
+            _saveTextureRepository.Save(pairs);
         }
     }
 }

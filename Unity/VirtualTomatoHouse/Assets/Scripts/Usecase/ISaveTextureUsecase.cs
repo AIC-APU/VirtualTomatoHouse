@@ -1,10 +1,12 @@
 using UnityEngine;
 using Cysharp.Threading.Tasks;
+using System.Collections.Generic;
+using System;
 
 namespace VirtualTomatoHouse.Scripts.Usecase
 {
     public interface ISaveTextureUsecase
     {
-        public UniTask SaveTexture(int width, int height, Camera camera, TextureFormat format, string filePath);
+        public void SaveTexture(IEnumerable<AnnotationPair> pairs);
     }
 }

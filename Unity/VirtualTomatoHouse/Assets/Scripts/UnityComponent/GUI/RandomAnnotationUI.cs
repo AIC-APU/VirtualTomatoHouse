@@ -1,12 +1,13 @@
 using System;
 using System.IO;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using VirtualTomatoHouse.Scripts.UnityComponet.Camera;
 using VirtualTomatoHouse.Scripts.UnityComponet.Light;
 using VirtualTomatoHouse.Scripts.Controller;
-
+using Cysharp.Threading.Tasks;
 
 namespace VirtualTomatoHouse.Scripts.UnityComponet.GUI
 {
@@ -64,20 +65,28 @@ namespace VirtualTomatoHouse.Scripts.UnityComponet.GUI
         #region Public method
         public async void OnClickStart()
         {
-            var directory = Path.GetFullPath(UnityEngine.Application.streamingAssetsPath + "/../../../AnnotationImages");
-            var now = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
+            //ボタンを使用不可に
+            _startButton.interactable = false;
 
             for (int i = _startNum; i <= _endNum; i++)
             {
+                //カメラとライトをランダムに配置
                 _cameraPosSetter.RandomSet();
                 _cameraFovSetter.RandomSet();
                 _lightPosSetter.RandomSet();
 
-                await _annotationTaker.TakeColorPhoto(directory + $"/{now}/images", i);
-                await _annotationTaker.TakeTagPhoto(directory + $"/{now}/tags", i);
+                //pairを格納
+                await _annotationTaker.StoreAnnotationPair(i);
             }
 
-            _textUI.PopUpText($"{directory}に画像が保存されました。");
+            //保存
+            _annotationTaker.Save();
+
+            //一秒待つ
+            await UniTask.Delay(TimeSpan.FromSeconds(1));
+
+            //ボタンを使用可能に
+            _startButton.interactable = true;
         }
 
         public void OnEndEditStartNum(string text)

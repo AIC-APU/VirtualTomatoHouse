@@ -1,6 +1,7 @@
 using System.Text.RegularExpressions;
 using System.IO;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 using VirtualTomatoHouse.Scripts.Usecase;
@@ -38,6 +39,7 @@ namespace VirtualTomatoHouse.Scripts.Controller
         #region Private Fields
         private int _width = 224;
         private int _height = 224;
+        private List<AnnotationPair> _pairList = new List<AnnotationPair>();
         #endregion
 
         #region Readonly Fields
@@ -51,102 +53,78 @@ namespace VirtualTomatoHouse.Scripts.Controller
         const int MIN_HEIGHT = 32;
         #endregion
 
-        #region Public method
-        public async void TakeOnePairForDebug()
+        #region  Monobehaviour Callbacks
+        void Awake()
         {
-            var directory = Path.GetFullPath(UnityEngine.Application.streamingAssetsPath + "/../../../AnnotationImages/Test");
-            
-            await TakeColorPhoto(directory, 0);
-            await TakeTagPhoto(directory, 0);
-
-            Debug.Log($"{directory}に画像が保存されました。");
+            _tagCamera.SetReplacementShader(Shader.Find("IndexTexture"), null);
         }
 
-        public async UniTask TakeColorPhoto(string directory, int fileNum = 0)
+        void OnDestroy()
         {
-            var fileNumString = Math.Abs(fileNum).ToString("D4");
+            _tagCamera.ResetReplacementShader();
+        }
+        #endregion
 
-            var filePath = Path.GetFullPath($"{directory}/color_{fileNumString}.png");
-            filePath = NumberingFilePath(filePath);
-
-            //指定されたカメラと同じ位置に撮影用カメラを移動させる
+        #region Public method
+        public async UniTask StoreAnnotationPair(int id)
+        {
+            //color,tagカメラの位置を合わせる
             _colorCamera.transform.position = _targetCamera.transform.position;
             _colorCamera.transform.rotation = _targetCamera.transform.rotation;
-
-            //テクスチャの保存
-            await _saveTextureUsecase.SaveTexture(_width, _height, _colorCamera, TextureFormat.RGB24, filePath);
-        }
-
-        public async UniTask TakeTagPhoto(string directory = "", int fileNum = 0)
-        {
-            var fileNumString = Math.Abs(fileNum).ToString("D4");
-
-            var filePath = Path.GetFullPath($"{directory}/tag_{fileNumString}.png");
-            filePath = NumberingFilePath(filePath);
-
-            //指定されたカメラと同じ位置に撮影用カメラを移動させる
             _tagCamera.transform.position = _targetCamera.transform.position;
             _tagCamera.transform.rotation = _targetCamera.transform.rotation;
 
-            //テクスチャの保存
-            await _saveTextureUsecase.SaveTexture(_width, _height, _tagCamera, TextureFormat.R8, filePath);
+            //テクスチャの取得
+            var colorTex2d = await CreateTexture(_width, _height, _colorCamera, TextureFormat.RGB24);
+            var tagTex2d = await CreateTexture(_width, _height, _tagCamera, TextureFormat.R8);
+
+            //AnnotationPairに格納
+            var pair = new AnnotationPair(new ColorTexture(colorTex2d), new TagTexture(tagTex2d), id);
+
+            _pairList.Add(pair);
+        }
+
+        public void Save()
+        {
+            _saveTextureUsecase.SaveTexture(_pairList);
+
+            _pairList.Clear();
         }
         #endregion
 
         #region Private method
-        /// <summary>
-        /// ディレクトリに同名のファイルがあれば、ファイル名に番号を付けたパスを返す。
-        /// </summary>
-        private string NumberingFilePath(string filePath)
+        private async UniTask<Texture2D> CreateTexture(int width, int height, Camera camera, TextureFormat format)
         {
-            //ディレクトリに同名のパスがあれば、それに番号を付けた物を返す。
-            var directry = Path.GetDirectoryName(filePath);
-            var fileName = Path.GetFileNameWithoutExtension(filePath);
-            var extension = Path.GetExtension(filePath);
+            var texture = new Texture2D(width, height, format, false);
+            var render = new RenderTexture(width, height, 24);
 
-            while (File.Exists($"{directry}/{fileName}{extension}"))
+            //cameraの映像を反映するRenderTextureを設定
+            if (camera.targetTexture != null)
             {
-                //同名のファイルが存在した場合、ファイル名の末尾の数字を足す
-                fileName = IncrementStringEnd(fileName);
+                camera.targetTexture.Release();
             }
+            camera.targetTexture = render;
 
-            return $"{directry}/{fileName}{extension}";
-        }
+            //1フレーム待つ
+            await UniTask.Yield();
 
-        private string IncrementStringEnd(string str)
-        {
-            //ファイルネームの最後に数字がついているかを判定
-            if (EndWithNumber(str))
+            //RenderTextureと同じ画像をTextureにコピー
+            var cache = RenderTexture.active;
+            RenderTexture.active = render;
+            texture.ReadPixels(new Rect(0, 0, camera.targetTexture.width, camera.targetTexture.height), 0, 0);
+            texture.Apply();
+
+            UnityEngine.Object.Destroy(render);
+
+            //後処理
+            RenderTexture.active = cache;
+            if (camera.targetTexture != null)
             {
-                var end = str.Substring(str.Length - 1);
-                var others = str.Substring(0, str.Length - 1);
-
-                if (Regex.IsMatch(end, "[0-8]"))
-                {
-                    //末尾が0-8であればその数に1を足す
-                    end = (int.Parse(end) + 1).ToString();
-                }
-                else if (end == "9")
-                {
-                    //末尾が9であれば上の位の数を増やして、9を0にする
-                    others = IncrementStringEnd(others);
-                    end = "0";
-                }
-                str = others + end;
+                camera.targetTexture.Release();
             }
-            else
-            {
-                //ついていないなら1を付ける
-                str += "1";
-            }
+            camera.targetTexture = null;
 
-            return str;
-        }
-
-        private bool EndWithNumber(string str)
-        {
-            var pattern = "([0-9]+$)";
-            return Regex.IsMatch(str, pattern);
+            return texture;
         }
         #endregion
     }

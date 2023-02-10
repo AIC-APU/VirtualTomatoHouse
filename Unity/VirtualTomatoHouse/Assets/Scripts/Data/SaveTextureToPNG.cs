@@ -1,61 +1,43 @@
+using System;
 using System.IO;
+using System.Collections.Generic;
 using UnityEngine;
 using VirtualTomatoHouse.Scripts.Usecase;
-using Cysharp.Threading.Tasks;
+
 
 namespace VirtualTomatoHouse.Scripts.Data
 {
     public class SaveTextureToPNG : ISaveTextureRepository
     {
-        public async UniTask Save(int width, int height, Camera camera, TextureFormat format, string filePath)
+        readonly string DefaultDirectory = Path.GetFullPath(UnityEngine.Application.streamingAssetsPath + "/../../../AnnotationImages");
+
+        public void Save(IEnumerable<AnnotationPair> pairs)
         {
-            var texture = new Texture2D(width, height, format, false);
-            var render = new RenderTexture(width, height, 24);
-
-            //cameraの映像を反映するRenderTextureを設定
-            if (camera.targetTexture != null)
+            foreach (AnnotationPair pair in pairs)
             {
-                camera.targetTexture.Release();
+                //エンコード
+                byte[] coloreBytes = pair.Color.texture2d.EncodeToPNG();
+                byte[] tagBytes = pair.Tag.texture2d.EncodeToPNG();
+                string id = pair.ID.ToString("D4");
+
+                //パス作成
+                var colorPath = DefaultDirectory + $"/color/color_{id}.png";
+                var tagPath = DefaultDirectory + $"/tag/tag_{id}.png";
+
+                //ディレクトリ作成
+                var colorDir = Path.GetDirectoryName(colorPath);
+                if (!Directory.Exists(colorDir)) Directory.CreateDirectory(colorDir);
+                var tagDir = Path.GetDirectoryName(tagPath);
+                if (!Directory.Exists(tagDir)) Directory.CreateDirectory(tagDir);
+
+                //保存
+                File.WriteAllBytes(colorPath, coloreBytes);
+                File.WriteAllBytes(tagPath, tagBytes);
+
+                //テクスチャの破棄（メモリリーク防止）
+                UnityEngine.Object.Destroy(pair.Color.texture2d);
+                UnityEngine.Object.Destroy(pair.Tag.texture2d);
             }
-            camera.targetTexture = render;
-
-            //1フレーム待つ
-            await UniTask.Yield();
-
-            //RenderTextureと同じ画像をTextureにコピー
-            var cache = RenderTexture.active;
-            RenderTexture.active = render;
-            texture.ReadPixels(new Rect(0, 0, camera.targetTexture.width, camera.targetTexture.height), 0, 0);
-            texture.Apply();
-
-            //エンコード
-            byte[] PNGBytes = texture.EncodeToPNG();
-
-            //拡張子のつけ忘れ防止
-            if (!filePath.EndsWith(".png")) filePath += ".png";
-
-            //ディレクトリ作成
-            var directryName = Path.GetDirectoryName(filePath);
-            if (!Directory.Exists(directryName))
-            {
-                //savePathのディレクトリがなければ作る
-                Directory.CreateDirectory(directryName);
-            }
-
-            //保存
-            File.WriteAllBytes(filePath, PNGBytes);
-
-            //テクスチャの破棄（メモリリーク防止）
-            Object.Destroy(texture);
-            Object.Destroy(render);
-
-            //後処理
-            RenderTexture.active = cache;
-            if (camera.targetTexture != null)
-            {
-                camera.targetTexture.Release();
-            }
-            camera.targetTexture = null;
         }
     }
 }
