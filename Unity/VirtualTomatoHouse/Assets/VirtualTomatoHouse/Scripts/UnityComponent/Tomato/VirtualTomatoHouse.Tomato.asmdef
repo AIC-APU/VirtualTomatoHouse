@@ -1,0 +1,14 @@
+{
+    "name": "VirtualTomatoHouse.Tomato",
+    "rootNamespace": "Plusplus.VirtualTomatoHouse.Scripts.UnityComponet.Tomato",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

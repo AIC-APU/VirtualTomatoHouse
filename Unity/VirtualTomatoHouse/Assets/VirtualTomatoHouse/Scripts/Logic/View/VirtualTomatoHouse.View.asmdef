@@ -1,0 +1,16 @@
+{
+    "name": "VirtualTomatoHouse.View",
+    "rootNamespace": "Plusplus.VirtualTomatoHouse.Scripts.Logic.View",
+    "references": [
+        "GUID:ff82f325a7426f842a0a38feb23ca86e"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

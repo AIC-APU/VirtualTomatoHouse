@@ -1,0 +1,17 @@
+{
+    "name": "VirtualTomatoHouse.Usecase",
+    "rootNamespace": "Plusplus.VirtualTomatoHouse.Scripts.Logic.Usecase",
+    "references": [
+        "GUID:0a8597d8a2c0de840a16863e6f7a12ab",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
