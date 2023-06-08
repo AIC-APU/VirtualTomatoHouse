@@ -53,7 +53,7 @@ namespace Plusplus.VirtualTomatoHouse.Scripts.Logic.Controller
         #region  Monobehaviour Callbacks
         void Awake()
         {
-            _tagCamera.SetReplacementShader(Shader.Find("IndexTexture"), null);
+            _tagCamera.SetReplacementShader(Shader.Find("IndexTextureLinear"), null);
         }
 
         void OnDestroy()
