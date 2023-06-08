@@ -69,7 +69,7 @@ Material:
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _Height: 0
-    - _Id: 32
+    - _Id: 0
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
