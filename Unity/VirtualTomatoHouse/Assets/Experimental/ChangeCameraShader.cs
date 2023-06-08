@@ -4,23 +4,35 @@ using UnityEngine;
 
 public class ChangeCameraShader : MonoBehaviour
 {
+    public GameObject original;
+
     // Start is called before the first frame update
     void Start()
     {
         GetComponent<Camera>().SetReplacementShader(Shader.Find("IndexTextureLinear"), null);
         string convTable = "";
-        for(int i = 0; i < 256; i++)
+        for (int i = 0; i < 256; i++)
         {
-            float temp = Mathf.GammaToLinearSpace((i+0.1f) / 255.0f);
+            float temp = Mathf.GammaToLinearSpace((i + 0.1f) / 255.0f);
             convTable += temp + ", ";
         }
         Debug.Log(convTable);
+
+        for (int i = 0; i < 16; i++)
+        {
+            for (int j = 0; j < 16; j++)
+            {
+                GameObject obj = Instantiate(original);
+                obj.transform.position += new Vector3(j, -i, 0);
+                obj.GetComponent<Renderer>().material.SetFloat("_Id", i * 16 + j);
+            }
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }
 
