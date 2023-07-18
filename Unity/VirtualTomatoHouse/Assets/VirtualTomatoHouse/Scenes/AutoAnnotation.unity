@@ -2129,7 +2129,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &342618418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2889,7 +2889,9 @@ MonoBehaviour:
   - {fileID: 1655642385}
   minFov: 30
   maxFov: 60
-  _tomatoTest: {fileID: 1401137232}
+  FLUCTUATION_FORWARD: 0.3
+  FLUCTUATION_RIGHT: 0.1
+  FLUCTUATION_UP: 0.1
 --- !u!1 &445288020
 GameObject:
   m_ObjectHideFlags: 0
@@ -8208,7 +8210,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1167853791
 Transform:
   m_ObjectHideFlags: 0
@@ -8505,7 +8507,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1215785073
 MonoBehaviour:
   m_ObjectHideFlags: 0

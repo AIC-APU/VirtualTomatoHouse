@@ -1,20 +1,22 @@
+using System;
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
+using UnityEngine;
+
 
 namespace Plusplus.VirtualTomatoHouse.Scripts.View.Camera
 {
     public class FaceTomatoSetter : BaseCameraSetter
     {
-        #region Serialized Fields
-        [Header("For Debug")]
-        [SerializeField] private Transform _tomatoTest;
+        #region Private Fields
+        private List<Transform> _tomatoTransform = new List<Transform>();
+        private Transform _target;
         #endregion
 
         #region Const
-        private const float FLUCTUATION_FORWARD = 0.5f;
-        private const float FLUCTUATION_RIGHT = 0.1f;
-        private const float FLUCTUATION_UP = 0.1f;
+        [SerializeField] private float FLUCTUATION_FORWARD = 0.5f;
+        [SerializeField] private float FLUCTUATION_RIGHT = 0.5f;
+        [SerializeField] private float FLUCTUATION_UP = 0.5f;
         #endregion
 
         #region Monobehaviour Callbacks
@@ -23,20 +25,28 @@ namespace Plusplus.VirtualTomatoHouse.Scripts.View.Camera
             foreach (Transform rangeBoxObj in _rangeBoxObjects)
             {
                 //rangeBox はゲーム中非表示にしたい。
-                //rangeBoxObj.GetComponent<MeshRenderer>().enabled = false;
+                rangeBoxObj.GetComponent<MeshRenderer>().enabled = false;
             }
         }
 
-        void Update()
+        void Start()
         {
-            
+            //_tomatoObjectsの初期化
+            _tomatoTransform = GameObject.FindGameObjectsWithTag("Tomato")
+                               .Select(obj => obj.transform)
+                               .ToList();
         }
         #endregion
 
         #region Public Methods
-        [ContextMenu("SetCamera")]
         public override void SetCamera()
         {
+            //Targetの更新
+            //_tomatoObjectsの中からランダムで選択
+            _target = _tomatoTransform
+                    .OrderBy(_ => Guid.NewGuid())
+                    .First();
+
             SetCameraPosAndAng(_camera);
             SetCameraFov(_camera);
         }
@@ -46,22 +56,22 @@ namespace Plusplus.VirtualTomatoHouse.Scripts.View.Camera
         protected override void SetCameraFov(UnityEngine.Camera camera)
         {
             //カメラのfovを指定
-            camera.fieldOfView = Random.Range(minFov, maxFov);
+            camera.fieldOfView = UnityEngine.Random.Range(minFov, maxFov);
         }
 
         protected override void SetCameraPosAndAng(UnityEngine.Camera camera)
         {
             //カメラの基準位置を計算
-            var pos = CalcNearestPosInBox(_tomatoTest.position, _rangeBoxObjects);
+            var pos = CalcNearestPosInBox(_target.position, _rangeBoxObjects);
             camera.transform.position = pos;
 
             //カメラの向きを設定
-            camera.transform.LookAt(_tomatoTest.position);
+            camera.transform.LookAt(_target.position);
 
             //位置に揺らぎを持たせる
-            pos += camera.transform.forward * Random.Range(-FLUCTUATION_FORWARD, 0);
-            pos += camera.transform.right * Random.Range(-FLUCTUATION_RIGHT, FLUCTUATION_RIGHT);
-            pos += camera.transform.up * Random.Range(-FLUCTUATION_UP, FLUCTUATION_UP);
+            pos += camera.transform.forward * UnityEngine.Random.Range(-FLUCTUATION_FORWARD, 0);
+            pos += camera.transform.right * UnityEngine.Random.Range(-FLUCTUATION_RIGHT, FLUCTUATION_RIGHT);
+            pos += camera.transform.up * UnityEngine.Random.Range(-FLUCTUATION_UP, FLUCTUATION_UP);
             
             //カメラの位置を設定
             camera.transform.position = pos;
