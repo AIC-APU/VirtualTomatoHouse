@@ -42,6 +42,11 @@ namespace Plusplus.VirtualTomatoHouse.Scripts.View.Camera
         #region Public Methods
         public override void SetCamera()
         {
+            if(_tomatoTransform.Count == 0)
+            {
+                throw new ArgumentNullException("Tomatoが見つかりませんでした。");
+            }
+
             //Targetの更新
             //_tomatoObjectsの中からランダムで選択
             _target = _tomatoTransform
