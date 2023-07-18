@@ -13,10 +13,11 @@ namespace Plusplus.VirtualTomatoHouse.Scripts.View.Camera
         private Transform _target;
         #endregion
 
-        #region Const
-        [SerializeField] private float FLUCTUATION_FORWARD = 0.5f;
-        [SerializeField] private float FLUCTUATION_RIGHT = 0.5f;
-        [SerializeField] private float FLUCTUATION_UP = 0.5f;
+        #region Serialize Fields
+        [Header("Camera Setting")]
+        [SerializeField] private float _fluctuationForward = 0.3f;
+        [SerializeField] private float _fluctuationRight = 0.1f;
+        [SerializeField] private float _fluctuationUp = 0.1f;
         #endregion
 
         #region Monobehaviour Callbacks
@@ -69,9 +70,9 @@ namespace Plusplus.VirtualTomatoHouse.Scripts.View.Camera
             camera.transform.LookAt(_target.position);
 
             //位置に揺らぎを持たせる
-            pos += camera.transform.forward * UnityEngine.Random.Range(-FLUCTUATION_FORWARD, 0);
-            pos += camera.transform.right * UnityEngine.Random.Range(-FLUCTUATION_RIGHT, FLUCTUATION_RIGHT);
-            pos += camera.transform.up * UnityEngine.Random.Range(-FLUCTUATION_UP, FLUCTUATION_UP);
+            pos += camera.transform.forward * UnityEngine.Random.Range(-_fluctuationForward, 0);
+            pos += camera.transform.right * UnityEngine.Random.Range(-_fluctuationRight, _fluctuationRight);
+            pos += camera.transform.up * UnityEngine.Random.Range(-_fluctuationUp, _fluctuationUp);
             
             //カメラの位置を設定
             camera.transform.position = pos;
