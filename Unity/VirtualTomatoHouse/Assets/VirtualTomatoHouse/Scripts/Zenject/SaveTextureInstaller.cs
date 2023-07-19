@@ -1,6 +1,6 @@
 using Zenject;
-using Plusplus.VirtualTomatoHouse.Scripts.Logic.Usecase;
-using Plusplus.VirtualTomatoHouse.Scripts.Logic.Data;
+using Plusplus.VirtualTomatoHouse.Scripts.Model;
+using Plusplus.VirtualTomatoHouse.Scripts.Data;
 
 namespace Plusplus.VirtualTomatoHouse.Scripts.Zenject
 {
@@ -9,12 +9,12 @@ namespace Plusplus.VirtualTomatoHouse.Scripts.Zenject
         public override void InstallBindings()
         {
             Container
-            .Bind<ISaveTextureUsecase>()
-            .To<SaveTextureUsecase>()
+            .Bind<ISaveTextureModel>()
+            .To<SaveTextureModel>()
             .AsSingle();
 
             Container
-            .Bind<ISaveTextureRepository>()
+            .Bind<ISaveTextureData>()
             .To<SaveTextureToPNG>()
             .AsSingle();
         }

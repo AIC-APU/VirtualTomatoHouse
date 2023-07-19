@@ -1,0 +1,21 @@
+{
+    "name": "VirtualToamtoHouse.Annotation",
+    "rootNamespace": "Plusplus.VirtualTomatoHouse.Scripts.View.Annotation",
+    "references": [
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:2bafac87e7f4b9b418d9448d219b01ab",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:08a539b4a61923c429c39b17a759cb08",
+        "GUID:71e64ec8f2b85654e8cba2991b6c1ed0",
+        "GUID:086e249c1406721409b478e8a4826fbd"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

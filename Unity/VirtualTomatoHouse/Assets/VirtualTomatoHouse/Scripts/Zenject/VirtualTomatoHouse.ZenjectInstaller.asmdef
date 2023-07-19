@@ -3,8 +3,8 @@
     "rootNamespace": "Plusplus.VirtualTomatoHouse.Scripts.Zenject",
     "references": [
         "GUID:0d8beb7f090555447a6cf5ce9e54dbb4",
-        "GUID:b39a3ab6294d76140a72ad797cd30779",
-        "GUID:011a5c41f65a3ef4cbf8365c9c356cff"
+        "GUID:086e249c1406721409b478e8a4826fbd",
+        "GUID:e8e5ceebfaec3e040bc025d3d6b1d8e1"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
