@@ -6,9 +6,10 @@ namespace Plusplus.VirtualTomatoHouse.Scripts.View.Camera
     [RequireComponent(typeof(UnityEngine.Camera))]
     public class CameraMoverForDebug : MonoBehaviour
     {
-        #region Readonly Fields
-        readonly float _moveSpeed = 1f;
-        readonly float _rotateSpeed = 0.5f;
+        #region Serialized Fields
+        [SerializeField] private float _moveSpeed = 1f;
+        [SerializeField] private float _rotateSpeed = 0.5f;
+        [SerializeField] private float _upSpeed = 1f;
         #endregion
 
         #region MonoBehaviour Callbacks
@@ -16,14 +17,17 @@ namespace Plusplus.VirtualTomatoHouse.Scripts.View.Camera
         {
             int forward = 0;
             int right = 0;
+            int up = 0;
 
             if (Keyboard.current.upArrowKey.isPressed || Keyboard.current.wKey.isPressed)
             {
-                forward++;
+                if(Keyboard.current.shiftKey.isPressed) up++;
+                else forward++;
             }
             if (Keyboard.current.downArrowKey.isPressed || Keyboard.current.sKey.isPressed)
             {
-                forward--;
+                if (Keyboard.current.shiftKey.isPressed) up--;
+                else forward--;
             }
             if (Keyboard.current.rightArrowKey.isPressed || Keyboard.current.dKey.isPressed)
             {
@@ -34,19 +38,17 @@ namespace Plusplus.VirtualTomatoHouse.Scripts.View.Camera
                 right--;
             }
 
-            if (forward != 0)
+            if (forward != 0 || up != 0)
             {
-                transform.position += transform.forward * forward * _moveSpeed * Time.deltaTime;
+                transform.position += transform.forward * forward * _moveSpeed * Time.deltaTime
+                                    + transform.up * up * _upSpeed * Time.deltaTime;
             }
 
             if (right != 0)
             {
                 transform.Rotate(0, right * _rotateSpeed, 0);
             }
-
-
         }
         #endregion
     }
-
 }

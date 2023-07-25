@@ -5,6 +5,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 24ae7054359c2ff4f9a09410d2b31a69, type: 3}
@@ -56,6 +57,12 @@ PrefabInstance:
       value: TomatoTree_03 Variant
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 24ae7054359c2ff4f9a09410d2b31a69, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1126266120690763972}
   m_SourcePrefab: {fileID: 100100000, guid: 24ae7054359c2ff4f9a09410d2b31a69, type: 3}
 --- !u!4 &285702774198197263 stripped
 Transform:
@@ -89,7 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78fd8babdd42ca84e8c3c3a687908afd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tomatoLocations:
+  _locators:
   - {fileID: 8814197346320988093}
   - {fileID: 6523109418153213339}
   - {fileID: 6895134754897147411}
@@ -115,6 +122,7 @@ MonoBehaviour:
   - {fileID: 8559246941611282717, guid: 56b14f7db2a8af64a8117c42506a20f6, type: 3}
   - {fileID: 4231329937624871220, guid: c0c0fc6073930e84d86672f125b27613, type: 3}
   - {fileID: 717537048546876951, guid: 3b8275ce47c1c964aa303a8ed9a9416d, type: 3}
+  _ajustScale: 0
 --- !u!4 &5467003527155812554 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9037652338605515012, guid: 24ae7054359c2ff4f9a09410d2b31a69, type: 3}
