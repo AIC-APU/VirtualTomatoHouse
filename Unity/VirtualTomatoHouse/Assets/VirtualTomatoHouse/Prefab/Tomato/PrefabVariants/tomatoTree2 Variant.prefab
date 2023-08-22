@@ -8,6 +8,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -8960128244614814524, guid: 1bd06e182c2ae4b48a767fdcbe0ced4d, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8960128244614814524, guid: 1bd06e182c2ae4b48a767fdcbe0ced4d, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1bd06e182c2ae4b48a767fdcbe0ced4d, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -52,9 +60,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7577739868436781572, guid: 1bd06e182c2ae4b48a767fdcbe0ced4d, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7577739868436781572, guid: 1bd06e182c2ae4b48a767fdcbe0ced4d, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 1bd06e182c2ae4b48a767fdcbe0ced4d, type: 3}
       propertyPath: m_Name
       value: tomatotree2 Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 1893194068992980029, guid: 1bd06e182c2ae4b48a767fdcbe0ced4d, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1893194068992980029, guid: 1bd06e182c2ae4b48a767fdcbe0ced4d, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
