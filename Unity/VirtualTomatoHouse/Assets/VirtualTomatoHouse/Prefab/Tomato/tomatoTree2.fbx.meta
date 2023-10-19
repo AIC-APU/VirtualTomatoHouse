@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1bd06e182c2ae4b48a767fdcbe0ced4d
+guid: a8d4ea7d951dcfc4eb29bf57ddf8662e
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,18 +7,28 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: leaf_tomatoleaf1
-    second: {fileID: 2100000, guid: 8b44167e48fd8ac4e95506622f83547d, type: 2}
+      name: clip
+    second: {fileID: 2100000, guid: 560657164bdd2a74b809d62c1252476c, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: leaf_tomatoleaf2
-    second: {fileID: 2100000, guid: 067cc11a5fe35944cb65e9c2e95a8291, type: 2}
+      name: cut
+    second: {fileID: 2100000, guid: 8e082f59cb28a464a8ad8330e4a1a47c, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: stem
+      name: greenstem
     second: {fileID: 2100000, guid: 4282524d5f5ae0c46bcf445c1de8c761, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: leaf_tomatoleaf01
+    second: {fileID: 2100000, guid: c714ce847c52f8548972bb396fdab59f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: wire
+    second: {fileID: 2100000, guid: 7fe65a1f77b6a744ebd3d4016007b8d0, type: 2}
   materials:
     materialImportMode: 2
     materialName: 1
