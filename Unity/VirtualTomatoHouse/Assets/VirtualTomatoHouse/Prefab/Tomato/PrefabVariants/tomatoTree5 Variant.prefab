@@ -54,7 +54,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 7f17e76dd9a2a444c9a672a26dbc19b2, type: 3}
       propertyPath: m_Name
-      value: tomatotree20 Variant
+      value: tomatotree5 Variant
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -222,7 +222,7 @@ MonoBehaviour:
   - {fileID: 4255450653772571178, guid: 8b45ea60ead2c56469f495ec4b1c25fd, type: 3}
   - {fileID: 1058324443266758379, guid: 930d2fb3900788f42af60113c00d155c, type: 3}
   - {fileID: 5204501414744939121, guid: 9ec565a0e35ea274f99494944adac608, type: 3}
-  _ajustScale: 0
+  _ajustScale: 1
 --- !u!4 &6085301520584304553 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8408566524651504889, guid: 7f17e76dd9a2a444c9a672a26dbc19b2, type: 3}
