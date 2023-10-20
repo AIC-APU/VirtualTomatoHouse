@@ -1,0 +1,119 @@
+#define GROUP_SIZE 1024
+
+#pragma kernel CSSetIndices
+#pragma kernel CSCalcDistances
+#pragma kernel CSCalcViewData
+
+#pragma use_dxc
+
+#include "GaussianSplatting.hlsl"
+
+float4x4 _LocalToWorldMatrix;
+float4x4 _WorldToCameraMatrix;
+RWStructuredBuffer<uint> _SplatSortDistances;
+RWStructuredBuffer<uint> _SplatSortKeys;
+uint _SplatCount;
+
+[numthreads(GROUP_SIZE,1,1)]
+void CSSetIndices (uint3 id : SV_DispatchThreadID)
+{
+    uint idx = id.x;
+    if (idx >= _SplatCount)
+        return;
+
+    _SplatSortKeys[idx] = idx;
+}
+
+[numthreads(GROUP_SIZE,1,1)]
+void CSCalcDistances (uint3 id : SV_DispatchThreadID)
+{
+    uint idx = id.x;
+    if (idx >= _SplatCount)
+        return;
+
+    uint origIdx = _SplatSortKeys[idx];
+
+    uint chunkIdx = origIdx / kChunkSize;
+    SplatChunkInfo chunk = _SplatChunks[chunkIdx];
+    float3 posMin = float3(chunk.posX.x, chunk.posY.x, chunk.posZ.x);
+    float3 posMax = float3(chunk.posX.y, chunk.posY.y, chunk.posZ.y);
+
+    float3 pos = LoadSplatPos(origIdx);
+    pos = lerp(posMin, posMax, pos);
+    pos = mul(_LocalToWorldMatrix, float4(pos.xyz, 1)).xyz;
+    pos = mul(_WorldToCameraMatrix, float4(pos.xyz, 1)).xyz;
+
+    // make distance radix sort friendly from http://stereopsis.com/radix.html
+    uint fu = asuint(pos.z);
+    uint mask = -((int)(fu >> 31)) | 0x80000000;
+    _SplatSortDistances[idx] = fu ^ mask;
+}
+
+RWStructuredBuffer<SplatViewData> _SplatViewData;
+
+float4x4 _MatrixVP;
+float4x4 _MatrixMV;
+float4x4 _MatrixP;
+float4x4 _MatrixObjectToWorld;
+float4x4 _MatrixWorldToObject;
+float4 _VecScreenParams;
+float4 _VecWorldSpaceCameraPos;
+
+float _SplatScale;
+float _SplatOpacityScale;
+uint _SHOrder;
+
+[numthreads(GROUP_SIZE,1,1)]
+void CSCalcViewData (uint3 id : SV_DispatchThreadID)
+{
+    uint idx = id.x;
+    if (idx >= _SplatCount)
+        return;
+
+    SplatData splat = LoadSplatData(idx);
+    SplatViewData view = (SplatViewData)0;
+    
+    float3 centerWorldPos = mul(_MatrixObjectToWorld, float4(splat.pos,1)).xyz;
+    float4 centerClipPos = mul(_MatrixVP, float4(centerWorldPos, 1));
+    view.pos = centerClipPos;
+    bool behindCam = centerClipPos.w <= 0;
+    if (!behindCam)
+    {
+        float4 boxRot = splat.rot;
+        float3 boxSize = splat.scale;
+
+        float3x3 splatRotScaleMat = CalcMatrixFromRotationScale(boxRot, boxSize);
+
+        float3 cov3d0, cov3d1;
+        CalcCovariance3D(splatRotScaleMat, cov3d0, cov3d1);
+        cov3d0 *= _SplatScale * _SplatScale;
+        cov3d1 *= _SplatScale * _SplatScale;
+        float3 cov2d = CalcCovariance2D(splat.pos, cov3d0, cov3d1, _MatrixMV, _MatrixP, _VecScreenParams);
+        
+        float det = cov2d.x * cov2d.z - cov2d.y * cov2d.y;
+
+        // Guard against precision issues that would result in occasional splat explosions, where a single splat would explode to covering the whole screen at rare angles / positions as its covariance matrix becomes degenerate.
+        det = max(1e-11, det);
+
+        float mid = 0.5f * (cov2d.x + cov2d.z);
+        float lambda1 = mid + sqrt(max(0.1f, mid * mid - det));
+        float lambda2 = mid - sqrt(max(0.1f, mid * mid - det));
+        float radius = ceil(3.f * sqrt(max(lambda1, lambda2)));
+
+        float3 conic = float3(cov2d.z, -cov2d.y, cov2d.x) * rcp(det);
+        view.conicRadius = float4(conic, radius);
+
+        float3 worldViewDir = _VecWorldSpaceCameraPos.xyz - centerWorldPos;
+        float3 objViewDir = mul((float3x3)_MatrixWorldToObject, worldViewDir);
+        objViewDir = normalize(objViewDir);
+
+        half4 col;
+        col.rgb = ShadeSH(splat.sh, objViewDir, _SHOrder);
+        col.a = min(splat.opacity * _SplatOpacityScale, 65000);
+        view.color.x = (f32tof16(col.r) << 16) | f32tof16(col.g);
+        view.color.y = (f32tof16(col.b) << 16) | f32tof16(col.a);
+    }
+    
+    _SplatViewData[idx] = view;
+}
+
