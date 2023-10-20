@@ -111,8 +111,6 @@ public class FfxParallelSort
                 Debug.Log("m_KernelSum: " + cs.IsSupported(m_KernelSum));
             }
         }
-
-        Debug.Log($"Valid: {m_Valid}");
     }
 
     static uint DivRoundUp(uint x, uint y) => (x + y - 1) / y;
