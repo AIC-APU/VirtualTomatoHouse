@@ -53,6 +53,19 @@ namespace Plusplus.VirtualTomatoHouse.Scripts.View.Tomato
 
             return new Vector3(scale, scale, scale);
         }
+
+        [ContextMenu("Search Locators")]  
+        private void SearchLocators()
+        {
+            _locators.Clear();
+            foreach (Transform child in transform)
+            {
+                if (child.name.Contains("Locator"))
+                {
+                    _locators.Add(child);
+                }
+            }
+        }
         #endregion
     }
 
