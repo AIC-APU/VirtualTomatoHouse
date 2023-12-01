@@ -1,15 +1,13 @@
+using System;
 using UnityEngine;
 
 namespace Plusplus.VirtualTomatoHouse.Scripts.View.HarvestRobot
 {
     public class PIDActuator : MonoBehaviour
     {
-        [Header("Target")]
-        public Transform Target;
-        public bool IsActive = true;
-        public bool IsReach => _isSideReach && _isHeightReach;
+        [NonSerialized] public Transform Target;
 
-        [Header("Side Distance Parameters")]
+        [Header("Side PID Parameters")]
         [SerializeField] private float _sideKp = 1f;
         [SerializeField] private float _sideKi = 0.01f;
         [SerializeField] private float _sideKd = 0.1f;
@@ -21,7 +19,7 @@ namespace Plusplus.VirtualTomatoHouse.Scripts.View.HarvestRobot
         private float _sideLastError = 0f;
 
 
-        [Header("Height Distance Parameters")]
+        [Header("Height PID Parameters")]
         [SerializeField] private float _heightKp = 1f;
         [SerializeField] private float _heightKi = 0.01f;
         [SerializeField] private float _heightKd = 0.1f;
@@ -34,10 +32,17 @@ namespace Plusplus.VirtualTomatoHouse.Scripts.View.HarvestRobot
 
         private bool _isSideReach = false;
         private bool _isHeightReach = false;
+        public bool IsReach => _isSideReach && _isHeightReach;
 
         void Update()
         {
-            if (Target == null || IsActive == false) return;
+            if (Target == null) return;
+
+            if(IsReach)
+            {
+                Target = null;
+                return;
+            }
 
             SideMove(Target.position);
 
@@ -68,7 +73,6 @@ namespace Plusplus.VirtualTomatoHouse.Scripts.View.HarvestRobot
                 _sideErrorSum = 0f;
                 _isSideReach = true;
             }
-
         }
 
         private void HeightMove(Vector3 targetPosition)

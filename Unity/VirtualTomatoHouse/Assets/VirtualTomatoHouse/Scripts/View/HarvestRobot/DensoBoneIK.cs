@@ -1,19 +1,17 @@
+using System;
 using UnityEngine;
 
 namespace Plusplus.VirtualTomatoHouse.Scripts.View.HarvestRobot
 {
     public class DensoBoneIK : MonoBehaviour
     {
-        [Header("Target")]
-        public Transform Target;
-        public bool IsActive = true;
-        public bool IsReach => _isReach;
-
+        [NonSerialized] public Transform Target;
+        
         [Header("Bones")]
         [SerializeField] private Transform _bone1; //Y only
         [SerializeField] private Transform _bone2; //X only
         [SerializeField] private Transform _bone3; //X only
-        [SerializeField] private Transform _locator;
+        [SerializeField] private Transform _tip;
 
         [Header("Parameters")]
         [SerializeField] private float _bone1Speed = 1f;
@@ -22,23 +20,26 @@ namespace Plusplus.VirtualTomatoHouse.Scripts.View.HarvestRobot
         [SerializeField] private float _threshold = 0.1f;
 
         private bool _isReach = false;
+        public bool IsReach => _isReach;
+
         private float _length1;
         private float _length2;
 
         void Start()
         {
             _length1 = Vector3.Distance(_bone2.position, _bone3.position);
-            _length2 = Vector3.Distance(_bone3.position, _locator.position);
+            _length2 = Vector3.Distance(_bone3.position, _tip.position);
         }
 
         void Update()
         {
-            if (Target == null || IsActive == false) return;
+            if (Target == null) return;
 
             //targetに到達していたら何もしない
-            if (Vector3.Distance(Target.position, _locator.position) < _threshold)
+            if (Vector3.Distance(Target.position, _tip.position) < _threshold)
             {
                 _isReach = true;
+                Target = null;
                 return;
             }
             _isReach = false;
