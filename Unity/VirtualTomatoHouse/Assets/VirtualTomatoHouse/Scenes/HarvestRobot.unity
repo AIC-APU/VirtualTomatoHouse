@@ -726,6 +726,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tomatoBasket: {fileID: 1610877194}
+  _standbyPosition: {fileID: 1716517874}
   _pidActuator: {fileID: 1537779818}
   _densoBoneIk: {fileID: 1537779822}
   _catch: {fileID: 1537779821}
@@ -775,6 +776,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _harvestRobotManager: {fileID: 1537779819}
+--- !u!4 &1537779825 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5767749105444574298, guid: 53fd0a41e2d7a7444ac5c87f69a1fc64, type: 3}
+  m_PrefabInstance: {fileID: 8501211426658180299}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1545992255
 GameObject:
   m_ObjectHideFlags: 0
@@ -879,6 +885,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2033614538797387762, guid: 53fd0a41e2d7a7444ac5c87f69a1fc64, type: 3}
   m_PrefabInstance: {fileID: 8501211426658180299}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1716517873
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1716517874}
+  m_Layer: 0
+  m_Name: StandbyPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1716517874
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1716517873}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 0.568, z: 0.305}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1537779825}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1819253263 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1943748056985276993, guid: 53fd0a41e2d7a7444ac5c87f69a1fc64, type: 3}
@@ -1293,6 +1330,9 @@ PrefabInstance:
     - {fileID: 4747253518169935614, guid: 53fd0a41e2d7a7444ac5c87f69a1fc64, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 5767749105444574298, guid: 53fd0a41e2d7a7444ac5c87f69a1fc64, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1716517874}
     - targetCorrespondingSourceObject: {fileID: 3627937700370991553, guid: 53fd0a41e2d7a7444ac5c87f69a1fc64, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1545992258}
