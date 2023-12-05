@@ -38,7 +38,10 @@ namespace Plusplus.VirtualTomatoHouse.Scripts.View.HarvestRobot
         {
             if (Target == null) return;
 
-            if(IsReach)
+            _isSideReach = CheckReachSide(Target);
+            _isHeightReach = CheckReachHeight(Target);
+
+            if (_isSideReach && _isHeightReach)
             {
                 Target = null;
                 return;
@@ -89,9 +92,9 @@ namespace Plusplus.VirtualTomatoHouse.Scripts.View.HarvestRobot
 
                 var output = PIDController(error, _heightKp, _heightKi, _heightKd, _heightMaxSpeed, _heightErrorSum, deltaError);
 
-                //高さを0から1に制限
+                //高さを0から2に制限
                 var heihgt = transform.position + transform.up * output * Time.deltaTime;
-                heihgt.y = Mathf.Clamp(heihgt.y, 0f, 1f);
+                heihgt.y = Mathf.Clamp(heihgt.y, 0f, 2f);
                 transform.position = heihgt;
 
                 _isHeightReach = false;
@@ -119,6 +122,38 @@ namespace Plusplus.VirtualTomatoHouse.Scripts.View.HarvestRobot
             output = Mathf.Clamp(output, -max, max);
 
             return output;
+        }
+
+        private bool CheckReachSide(Transform target)
+        {
+            var offsetVec = transform.right * _sideOffset;
+            var targetVector = target.position + offsetVec - transform.position;
+            var error = Vector3.Dot(targetVector, transform.right);
+
+            if (Mathf.Abs(error) > _sideThreshold)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        private bool CheckReachHeight(Transform target)
+        {
+            var offsetVec = transform.up * _heightOffset;
+            var targetVector = target.position + offsetVec - transform.position;
+            var error = Vector3.Dot(targetVector, transform.up);
+
+            if (Mathf.Abs(error) > _heightThreshold)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
     }
 }

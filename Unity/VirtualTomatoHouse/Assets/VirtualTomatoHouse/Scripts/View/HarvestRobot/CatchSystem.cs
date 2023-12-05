@@ -18,9 +18,11 @@ namespace Plusplus.VirtualTomatoHouse.Scripts.View.HarvestRobot
 
             //Targetの重力を無効にする
             var rigidbody = Target.GetComponent<Rigidbody>();
+            var collider = Target.GetComponent<Collider>();
             if (rigidbody != null)
             {
                 rigidbody.useGravity = false;
+                collider.isTrigger = true;
             }
 
             //Targetを_tipの子オブジェクトにする
@@ -33,9 +35,11 @@ namespace Plusplus.VirtualTomatoHouse.Scripts.View.HarvestRobot
 
             //Targetの重力を有効にする
             var rigidbody = Target.GetComponent<Rigidbody>();
+            var collider = Target.GetComponent<Collider>();
             if (rigidbody != null)
             {
                 rigidbody.useGravity = true;
+                collider.isTrigger = false;
             }
 
             //Targetを_tipの子オブジェクトから外す

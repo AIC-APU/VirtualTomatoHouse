@@ -1,12 +1,14 @@
 using UnityEngine;
 using Cysharp.Threading.Tasks;
+using System;
 
 namespace Plusplus.VirtualTomatoHouse.Scripts.View.HarvestRobot
 {
     public class HarvestRobotManager : MonoBehaviour
     {
+        [NonSerialized] public Transform Target;
+
         [Header("Transform")]
-        public Transform TargetForDebug;
         [SerializeField] private Transform _tomatoBasket;
 
         [Header("Robot Systems")]
@@ -18,37 +20,37 @@ namespace Plusplus.VirtualTomatoHouse.Scripts.View.HarvestRobot
 
         public async void Harvest()
         {
-            var target = TargetForDebug;
-
-            if(target == null)
+            if(Target == null)
             {
                 Debug.LogError("target is null");
                 return;
             }
 
-            if(_nowTarget != null && _nowTarget == target)
+            if(_nowTarget != null && _nowTarget == Target)
             {
                 Debug.LogError("target is same");
                 return;
             }
-            _nowTarget = target;
+            _nowTarget = Target;
 
-            _pidActuator.Target = target;
+            _pidActuator.Target = Target;
             await UniTask.WaitUntil(() => _pidActuator.IsReach);
 
-            _densoBoneIk.Target = target;
+            _densoBoneIk.Target = Target;
             await UniTask.WaitUntil(() => _densoBoneIk.IsReach);
 
             await UniTask.Delay(1000);
 
-            _catch.Target = target;
+            _catch.Target = Target;
             _catch.CatchTarget();
 
             _densoBoneIk.Target = _tomatoBasket;
             await UniTask.WaitUntil(() => _densoBoneIk.IsReach);
 
             _catch.ReleaseTarget();
-        }
 
+            _nowTarget = null;
+            Target = null;
+        }
     }
 }
