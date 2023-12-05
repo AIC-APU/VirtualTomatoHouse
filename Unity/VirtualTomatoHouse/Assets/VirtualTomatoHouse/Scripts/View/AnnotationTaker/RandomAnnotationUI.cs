@@ -63,7 +63,10 @@ namespace Plusplus.VirtualTomatoHouse.Scripts.View.Annotation
             //ボタンを使用不可に
             _startButton.interactable = false;
 
-            for (int i = _startNum; i <= _endNum; i++)
+            //一枚目はカメラ位置そのまま撮影
+            await _annotationTaker.StoreAnnotationPair(_startNum);
+
+            for (int i = _startNum + 1; i <= _endNum; i++)
             {
                 //カメラとライトをランダムに配置
                 _cameraSetter.SetCamera();
