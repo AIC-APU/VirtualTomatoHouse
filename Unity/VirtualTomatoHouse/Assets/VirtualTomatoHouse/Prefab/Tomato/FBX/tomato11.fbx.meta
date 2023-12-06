@@ -1,17 +1,35 @@
 fileFormatVersion: 2
-guid: 479578bb6ee687349b8863bb050efdf3
+guid: 3fb358cfdffe61e40a2c2826312e1f95
 ModelImporter:
   serializedVersion: 21202
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      74: 1827226128182048838
+    second: Take 001
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: tomato_tomatohalf
-    second: {fileID: 2100000, guid: a523c4c935673dc449e0f063b3901c29, type: 2}
+      name: Hull
+    second: {fileID: 2100000, guid: 1e33e6efdb8bba44a82584a1c808f62a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Tip1
+    second: {fileID: 2100000, guid: cfbb4734edf695744903e19b17242c13, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Tip2
+    second: {fileID: 2100000, guid: 610a325ea65084640b507d7ba2b542c7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: tomato_half
+    second: {fileID: 2100000, guid: 5950c592f9b8dc7499bbeca3c0b057fd, type: 2}
   materials:
     materialImportMode: 2
-    materialName: 1
+    materialName: 0
     materialSearch: 1
     materialLocation: 1
   animations:

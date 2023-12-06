@@ -1,14 +1,32 @@
 fileFormatVersion: 2
-guid: 44f9b6722f51e884590e07a5d3b4d373
+guid: 5b355d0c9c82d314d874acf7fe5b6e20
 ModelImporter:
   serializedVersion: 21202
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      74: 1827226128182048838
+    second: Take 001
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: tomato_tomatogreen
-    second: {fileID: 2100000, guid: 2f3dab0676d1bf04c8b74643810b1c98, type: 2}
+      name: Hull
+    second: {fileID: 2100000, guid: 1e33e6efdb8bba44a82584a1c808f62a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Tip1
+    second: {fileID: 2100000, guid: cfbb4734edf695744903e19b17242c13, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Tip2
+    second: {fileID: 2100000, guid: 610a325ea65084640b507d7ba2b542c7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: tomato_green
+    second: {fileID: 2100000, guid: 8a7dead8fcb5a5e4f87bc5d10c8987fe, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
