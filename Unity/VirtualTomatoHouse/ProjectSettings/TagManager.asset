@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Tomato
   - HoldableTomato
+  - GravityArea
   layers:
   - Default
   - TransparentFX
