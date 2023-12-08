@@ -14,7 +14,7 @@ namespace Plusplus.VirtualTomatoHouse.Scripts.View.HarvestRobot
 
         [Header("Robot Systems")]
         [SerializeField] private PIDActuator _pidActuator;
-        [SerializeField] private DensoBoneIK _densoBoneIk;
+        [SerializeField] private RobotArmIK _densoBoneIk;
         [SerializeField] private CatchSystem _catch;
 
         private Transform _nowTarget = null;
@@ -46,6 +46,7 @@ namespace Plusplus.VirtualTomatoHouse.Scripts.View.HarvestRobot
             //トマトに触れる
             _densoBoneIk.Target = Target;
             await UniTask.WaitUntil(() => _densoBoneIk.IsReach);
+            Debug.Log("reach");
 
             //待機
             await UniTask.Delay(500);
@@ -53,6 +54,7 @@ namespace Plusplus.VirtualTomatoHouse.Scripts.View.HarvestRobot
             //トマトをキャッチ
             _catch.Target = Target;
             _catch.CatchTarget();
+            Debug.Log("catch");
 
             //スタンバイ位置に移動
             _densoBoneIk.Target = _standbyPosition;
