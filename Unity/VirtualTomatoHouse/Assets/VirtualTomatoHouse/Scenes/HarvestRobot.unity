@@ -2424,6 +2424,14 @@ PrefabInstance:
       propertyPath: _tomatoPrefabs.Array.data[0]
       value: 
       objectReference: {fileID: 8985898467169565159, guid: cfdea388d8566e248b15b696e77791f1, type: 3}
+    - target: {fileID: 7680160531665150040, guid: 37d135be28a40074ca82f39914060581, type: 3}
+      propertyPath: _tomatoPrefabs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7680160531665150040, guid: 37d135be28a40074ca82f39914060581, type: 3}
+      propertyPath: _tomatoPrefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 2346550807377026247, guid: fc120e7ba809e9346866bfee83226805, type: 3}
     - target: {fileID: 7680718617514589919, guid: 37d135be28a40074ca82f39914060581, type: 3}
       propertyPath: _ajustScale
       value: 1

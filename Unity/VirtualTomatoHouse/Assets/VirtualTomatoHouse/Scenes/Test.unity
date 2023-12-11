@@ -515,7 +515,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2a8fe1e540007c41a87aa0aac0bc577, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Target: {fileID: 586606260}
   _bone1: {fileID: 2023880596}
   _bone2: {fileID: 2023880595}
   _bone3: {fileID: 2023880594}
