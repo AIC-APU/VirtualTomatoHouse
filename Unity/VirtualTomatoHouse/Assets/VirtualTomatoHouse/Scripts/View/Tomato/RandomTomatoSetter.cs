@@ -39,6 +39,8 @@ namespace Plusplus.VirtualTomatoHouse.Scripts.View.Tomato
                     tomato.transform.localScale = CalcTomatoScale(locator.position.y);
                 }
             }
+
+            randomLocList.Clear();
         }
         #endregion
 
