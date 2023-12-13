@@ -8,6 +8,7 @@ namespace Plusplus.VirtualTomatoHouse.Scripts.View.Tomato
     {
         #region Serialized Private Fields
         [SerializeField] private bool _ajustScale = false;
+        [SerializeField, Tooltip("0の時はlocatorの数がトマトの最大数となる")] private int _maxTomatoNum = 0;
         #endregion
 
         #region MonoBehaviour Callbacks
@@ -22,7 +23,11 @@ namespace Plusplus.VirtualTomatoHouse.Scripts.View.Tomato
         {
             var random = new System.Random();
 
-            var tomatoNum = random.Next(0, _locators.Count + 1);;
+            var tomatoNum = random.Next(0, _locators.Count + 1);
+            if (_maxTomatoNum > 0)
+            {
+                tomatoNum = Math.Min(tomatoNum, _maxTomatoNum);
+            }
 
             var randomLocList = _locators
                                 .OrderBy(x => Guid.NewGuid())

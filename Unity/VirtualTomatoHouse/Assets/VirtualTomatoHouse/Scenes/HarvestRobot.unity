@@ -285,7 +285,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 309773623}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -500, y: 0, z: -500}
+  m_LocalPosition: {x: -250, y: 0, z: -250}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2676,6 +2676,14 @@ PrefabInstance:
       propertyPath: _tomatoPrefabs.Array.data[0]
       value: 
       objectReference: {fileID: 8985898467169565159, guid: cfdea388d8566e248b15b696e77791f1, type: 3}
+    - target: {fileID: 8973248879331952115, guid: 37d135be28a40074ca82f39914060581, type: 3}
+      propertyPath: _tomatoPrefabs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8973248879331952115, guid: 37d135be28a40074ca82f39914060581, type: 3}
+      propertyPath: _tomatoPrefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 2346550807377026247, guid: fc120e7ba809e9346866bfee83226805, type: 3}
     - target: {fileID: 8974574815603307201, guid: 37d135be28a40074ca82f39914060581, type: 3}
       propertyPath: _tomatoPrefabs.Array.size
       value: 1
