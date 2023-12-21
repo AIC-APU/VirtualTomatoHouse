@@ -2,10 +2,12 @@ using UnityEngine;
 
 namespace Plusplus.VirtualTomatoHouse.Scripts.View.HarvestRobot
 {
-    public class PIDActuator : BasePID
+    public class PIDLift : BasePID
     {
-        [Header("Actuator")]
-        [SerializeField] private float _sideOffset = 0f;
+        [Header("Lift")]
+        [SerializeField] private float _heightOffset = 0f;
+        [SerializeField] private float _maxHeight = 1.8f;
+        [SerializeField] private float _minHeight = 0f;
 
         void Update()
         {
@@ -32,12 +34,14 @@ namespace Plusplus.VirtualTomatoHouse.Scripts.View.HarvestRobot
             var output = PIDCalculate(error, Time.deltaTime);
 
             //1フレーム分の移動量を計算
-            transform.position += output * Time.deltaTime * transform.right;
+            var heihgt = transform.position + output * Time.deltaTime * transform.up;
+            heihgt.y = Mathf.Clamp(heihgt.y, _minHeight, _maxHeight);
+            transform.position = heihgt;
         }
 
         protected override bool ReachCheck(Transform target)
         {
-            if (target == null) return false;
+            if(target == null) return false;
 
             var error = GetError(target);
             return Mathf.Abs(error) < _threshold;
@@ -45,9 +49,9 @@ namespace Plusplus.VirtualTomatoHouse.Scripts.View.HarvestRobot
 
         protected override float GetError(Transform target)
         {
-            var offsetVec = transform.right * _sideOffset;
+            var offsetVec = transform.up * _heightOffset;
             var targetVector = target.position + offsetVec - transform.position;
-            return Vector3.Dot(targetVector, transform.right);
+            return Vector3.Dot(targetVector, transform.up);
         }
     }
 }

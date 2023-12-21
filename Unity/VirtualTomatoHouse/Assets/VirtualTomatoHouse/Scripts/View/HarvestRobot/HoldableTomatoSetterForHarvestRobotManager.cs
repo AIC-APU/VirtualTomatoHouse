@@ -7,19 +7,32 @@ namespace Plusplus.VirtualTomatoHouse.Scripts.View.HarvestRobot
     public class HoldableTomatoSetterForHarvestRobotManager : MonoBehaviour
     {
         [SerializeField] private HarvestRobotManager _harvestRobotManager;
+        [SerializeField] private bool _autoMode = false;
 
         private Queue<Transform> _holdableTomatoes = new();
+
+        private Vector3 _standardPosition = new Vector3(50f, 100f, -100f);
 
         void Start()
         {
             var holdableTomatoes = 
                 GameObject.FindGameObjectsWithTag("HoldableTomato")
-                .OrderBy(i => System.Guid.NewGuid())
+                .OrderBy(i => Vector3.Distance(i.transform.position, _standardPosition))
                 .ToArray();
 
             foreach(var holdableTomato in holdableTomatoes)
             {
                 _holdableTomatoes.Enqueue(holdableTomato.transform);
+            }
+        }
+    
+        void Update()
+        {
+            if(_autoMode
+            && _holdableTomatoes.Count > 0
+            && _harvestRobotManager.Target == null)
+            {
+                SetTarget();
             }
         }
 

@@ -9,19 +9,32 @@ namespace Plusplus.VirtualTomatoHouse.Scripts.View.HarvestRobot
         [NonSerialized] public Transform Target;
 
         [Header("Transform")]
-        [SerializeField] private Transform _tomatoBasket;
-        [SerializeField] private Transform _standbyPosition;
+        [SerializeField] private Transform _basketStandby;
+        [SerializeField] private Transform _leftArmStandby;
+        [SerializeField] private Transform _rightArmStandby;
 
         [Header("Robot Systems")]
         [SerializeField] private PIDActuator _pidActuator;
-        [SerializeField] private RobotArmIK _densoBoneIk;
-        [SerializeField] private CatchSystem _catch;
+        [SerializeField] private PIDLift _pidLift;
+        [SerializeField] private RobotArmIK _leftArmIk;
+        [SerializeField] private RobotArmIK _rightArmIk;
+        [SerializeField] private CatchSystem _leftCatch;
+        [SerializeField] private CatchSystem _rightCatch;
 
         private Transform _nowTarget = null;
 
         void Start()
         {
-            _densoBoneIk.Target = _standbyPosition;
+            _leftArmIk.Target = _leftArmStandby;
+            _rightArmIk.Target = _rightArmStandby;
+        }
+
+        void Update()
+        {
+            if(Target != null && _nowTarget == null)
+            {
+                Harvest();
+            }
         }
 
         public async void Harvest()
@@ -41,37 +54,37 @@ namespace Plusplus.VirtualTomatoHouse.Scripts.View.HarvestRobot
 
             //移動
             _pidActuator.Target = Target;
+            _pidLift.Target = Target;
             await UniTask.WaitUntil(() => _pidActuator.IsReach);
+            await UniTask.WaitUntil(() => _pidLift.IsReach);
 
             //トマトに触れる
-            _densoBoneIk.Target = Target;
-            await UniTask.WaitUntil(() => _densoBoneIk.IsReach);
-            Debug.Log("reach");
+            _leftArmIk.Target = Target;
+            await UniTask.WaitUntil(() => _leftArmIk.IsReach);
 
             //待機
             await UniTask.Delay(500);
             
             //トマトをキャッチ
-            _catch.Target = Target;
-            _catch.CatchTarget();
-            Debug.Log("catch");
+            _leftCatch.Target = Target;
+            _leftCatch.CatchTarget();
 
             //スタンバイ位置に移動
-            _densoBoneIk.Target = _standbyPosition;
-            await UniTask.WaitUntil(() => _densoBoneIk.IsReach);
+            _leftArmIk.Target = _leftArmStandby;
+            await UniTask.WaitUntil(() => _leftArmIk.IsReach);
 
             //トマトをバスケットに移動
-            _densoBoneIk.Target = _tomatoBasket;
-            await UniTask.WaitUntil(() => _densoBoneIk.IsReach);
+            _leftArmIk.Target = _basketStandby;
+            await UniTask.WaitUntil(() => _leftArmIk.IsReach);
 
             //トマトを離す
-            _catch.ReleaseTarget();
+            _leftCatch.ReleaseTarget();
 
             await UniTask.Delay(500);
 
             //スタンバイ位置に移動
-            _densoBoneIk.Target = _standbyPosition;
-            await UniTask.WaitUntil(() => _densoBoneIk.IsReach);
+            _leftArmIk.Target = _leftArmStandby;
+            await UniTask.WaitUntil(() => _leftArmIk.IsReach);
 
             _nowTarget = null;
             Target = null;

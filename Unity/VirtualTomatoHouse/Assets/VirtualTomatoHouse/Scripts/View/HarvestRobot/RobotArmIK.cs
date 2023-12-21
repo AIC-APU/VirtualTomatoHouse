@@ -1,11 +1,11 @@
-using System;
 using UnityEngine;
 
 namespace Plusplus.VirtualTomatoHouse.Scripts.View.HarvestRobot
 {
     public class RobotArmIK : MonoBehaviour
     {
-        [NonSerialized] public Transform Target;
+        //[NonSerialized] 
+        public Transform Target;
         
         [Header("Bones")]
         [SerializeField] private Transform _bone1; //Y only
