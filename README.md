@@ -9,7 +9,6 @@
 このプロジェクトはUnity(2022.3.2f1)によって起動することができます。
 リポジトリをクローンし、VirtualTomatoHouse/Unity/VirtualTomatoHouse を起動してください。
 
-または、ビルド済みのWindowsバイナリをリリースページからダウンロードしてください。
 
 <br/>
 
