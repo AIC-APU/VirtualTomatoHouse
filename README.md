@@ -16,7 +16,7 @@
 ![image](https://github.com/AIC-APU/VirtualTomatoHouse/assets/126754093/2075b3b4-06a8-4919-b7e1-ab5a591ce5ee)
 
 
-Unity/VirtualTomatoHouse/Assets/Scenes/AutoAnnotation からシーンを起動してください。
+Unity/VirtualTomatoHouse/Assets/VirtualTomatoHouse/Scenes/AutoAnnotation からシーンを起動してください。
 
 ゲームを起動して、Startボタンを押すことでアノテーションの自動撮影が行われます。
 VirtualTomatoHouse/Unity/AnnotationImages というフォルダに撮影されたアノテーション画像が保存されます。
@@ -30,12 +30,12 @@ VirtualTomatoHouse/Unity/AnnotationImages というフォルダに撮影され�
 ![トマト収穫VR](https://github.com/AIC-APU/VirtualTomatoHouse/assets/126754093/2bc4b260-02be-4363-9eb7-00cc9829145a)
 
 
-Unity/VirtualTomatoHouse/Assets/Scenes/HarvestTomatoVR からシーンを起動してください。
+Unity/VirtualTomatoHouse/Assets/VirtualTomatoHouse/Scenes/HarvestTomatoVR からシーンを起動してください。
 
 Oculus Quest2またはOculus Quest3をPCに接続し、Oculus Linkを起動した状態でゲームを起動すると収穫VRを体験することができます。
 ハンドトラッキングにより手でトマトを掴むことができます。
 
-Unity/VirtualTomatoHouse/Assets/Scenes/HarvestTomatoMR からMRのシーンを起動することができ、同様の体験をすることができます。
+Unity/VirtualTomatoHouse/Assets/VirtualTomatoHouse/Scenes/HarvestTomatoMR からMRのシーンを起動することができ、同様の体験をすることができます。
 
 ![MRトマト収穫](https://github.com/AIC-APU/VirtualTomatoHouse/assets/126754093/12eaa5e5-7ab2-4f68-8ce1-b54f6113d96c)
 
@@ -45,11 +45,11 @@ Unity/VirtualTomatoHouse/Assets/Scenes/HarvestTomatoMR からMRのシーンを�
 
 ![image](https://github.com/AIC-APU/VirtualTomatoHouse/assets/126754093/e6542e55-eb68-4f26-b09d-bdeacfd6000d)
 
-Unity/VirtualTomatoHouse/Assets/Scenes/HarvestRobot からシーンを起動してください。
+Unity/VirtualTomatoHouse/Assets/VirtualTomatoHouse/Scenes/HarvestRobot からシーンを起動してください。
 
 ゲームを再生することで、自動収穫ロボットシミュレータが開始されます。
 
-Unity/VirtualTomatoHouse/Assets/Scenes/HarvestRobotVR からVRシーンを起動することができます。
+Unity/VirtualTomatoHouse/Assets/VirtualTomatoHouse/Scenes/HarvestRobotVR からVRシーンを起動することができます。
 
 ### ライセンス
 
